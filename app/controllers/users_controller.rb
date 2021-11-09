@@ -4,23 +4,19 @@ class UsersController < ApplicationController
     payload = {
       name: @user.name,
       email: @user.email,
-      iat: Time.now.to_i,
-      workspace_id: 1671
+      iat: Time.now.to_i
     }
-    puts payload
-    hmac_secret = 'lxWAdQbKlc7O5C6zygGHuzukfhnx2_opEd8AktWn1QzZEE7-WS6vBA2gpzAUHxY1'
+    hmac_secret = '74vpdZOJvKKq8AptwX_7t3fwNjn7hhOJoLw7liubWJzZtYMVthDXRzmvQl15ANEY'
     token = JWT.encode payload, hmac_secret, 'HS256'
-    puts token
-    res = HTTParty.post('http://yieldhub.marbleteams.com/auth/jwt',
+    res = HTTParty.post('http://yieldhub.elearningaccelerator.com/auth/jwt',
                         body: {
-                          jwt: token
-                          # return_to: 'https://www.google.com/'
+                          jwt: token,
+                          return_to: 'https://yieldhub.elearningaccelerator.com/paths/1'
                         },
                         headers: {
                           'typ': 'JWT',
-                          'alg': 'HS256',
-                          'Authorization': 'Bearer lxWAdQbKlc7O5C6zygGHuzukfhnx2_opEd8AktWn1QzZEE7-WS6vBA2gpzAUHxY1',
+                          'alg': 'HS256'
                         })
-    puts res
+    redirect_to res.parsed_response['url']
   end
 end
