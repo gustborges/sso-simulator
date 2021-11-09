@@ -1,7 +1,7 @@
 
 <div class="text-center mt-5">
   <h1 class="mb-5">SSO Simulator</h1>
-  <%= form_with model: @user do |form| %>
+  <%= form_with url: send_request_url, method: :post do |form| %>
     <%= form.text_field :email %>
     <%= form.submit "Send" %>
   <% end %>
